@@ -12,7 +12,7 @@ public class Main {
 
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
-        
+
     System.out.println("================================");
     System.out.println("      CHAT APP REGISTRATION      ");
     System.out.println("================================");
@@ -32,4 +32,23 @@ public class Main {
     System.out.print("Enter your South African cell phone number: ");
     String cellPhoneNumber = input.nextLine();
 
-   
+    Login user = new Login(firstName, lastName, username, password, cellPhoneNumber);
+
+    System.out.println("\n======== REGISTRATION ========");
+    String registrationMessage = user.registerUser();
+    System.out.println(registrationMessage);
+
+    if (registrationMessage.equals("Registration successful.")) {
+        System.out.println("\n======== LOGIN ========");
+        System.out.print("Enter your username: ");
+        String enteredUsername = input.nextLine();
+        System.out.print("Enter your password: ");
+        String enteredPassword = input.nextLine();
+
+        boolean loginSuccessful = user.loginUser(enteredUsername, enteredPassword);
+        System.out.println(user.returnLoginStatus(loginSuccessful));
+    }
+
+    input.close();
+ }
+}
