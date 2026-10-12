@@ -2,11 +2,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-import org.junit.jupiter.api.BeforeEach;
+package com.mycompany.main;
+
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
+
 /**
- *
  * @author Student
  */
 public class LoginTest {
@@ -19,7 +20,7 @@ public class LoginTest {
 
     @Test
     void testUsernameIncorrectlyFormatted() {
-        Login user = new Login("Kyle", "Smith", "kyle!!!!!!!", "Ch&&sec@ke99!", "+27838968976");
+        Login user = new Login("Kyle", "Smith", "kyle!!!!!", "Ch&&sec@ke99!", "+27838968976");
         assertFalse(user.checkUserName());
     }
 
@@ -55,11 +56,12 @@ public class LoginTest {
 
     @Test
     void testRegisterUsernameFailMessage() {
-        Login user = new Login("Kyle", "Smith", "kyle!!!!!!!", "Ch&&sec@ke99!", "+27838968976");
+        Login user = new Login("Kyle", "Smith", "kyle!!!!!", "Ch&&sec@ke99!", "+27838968976");
         assertEquals(
             "Username is not correctly formatted; please ensure that your username "
             + "contains an underscore and is no more than five characters in length.",
-            user.registerUser());
+            user.registerUser()
+        );
     }
 
     @Test
@@ -68,7 +70,8 @@ public class LoginTest {
         assertEquals(
             "Password is not correctly formatted; please ensure that the password "
             + "contains at least eight characters, a capital letter, a number, and a special character.",
-            user.registerUser());
+            user.registerUser()
+        );
     }
 
     @Test
@@ -77,7 +80,8 @@ public class LoginTest {
         assertEquals(
             "Cell number is incorrectly formatted or does not contain an international code; "
             + "please correct the number and try again.",
-            user.registerUser());
+            user.registerUser()
+        );
     }
 
     @Test
@@ -106,5 +110,4 @@ public class LoginTest {
         assertEquals("Username or password incorrect, please try again.", user.returnLoginStatus(success));
     }
 }
-    
 
