@@ -12,18 +12,26 @@ import static org.junit.Assert.*;
  */
 public class LoginTest {
 
-    @Test
-    public void testUsernameCorrectlyFormatted() {
-        Login user = new Login("Kyle", "Smith", "kyl_1", "Ch&&sec@ke99!", "+27838968976");
-        assertTrue(user.checkUserName());
-    }
-
+    // ========== Username Tests ==========
     @Test
     public void testUsernameIncorrectlyFormatted() {
         Login user = new Login("Kyle", "Smith", "kyle!!!!", "Ch&&sec@ke99!", "+27838968976");
         assertFalse(user.checkUserName());
     }
 
+    @Test
+    public void testUsernameTooLong() {
+        Login user = new Login("Kyle", "Smith", "kyle_12", "Ch&&sec@ke99!", "+27838968976");
+        assertFalse(user.checkUserName());
+    }
+
+    @Test
+    public void testUsernameNoUnderscore() {
+        Login user = new Login("Kyle", "Smith", "kyle1", "Ch&&sec@ke99!", "+27838968976");
+        assertFalse(user.checkUserName());
+    }
+
+    // ========== Password Tests ==========
     @Test
     public void testPasswordMeetsComplexity() {
         Login user = new Login("Kyle", "Smith", "kyl_1", "Ch&&sec@ke99!", "+27838968976");
@@ -37,6 +45,19 @@ public class LoginTest {
     }
 
     @Test
+    public void testPasswordNoSpecialCharacter() {
+        Login user = new Login("Kyle", "Smith", "kyl_1", "Password1", "+27838968976");
+        assertFalse(user.checkPasswordComplexity());
+    }
+
+    @Test
+    public void testPasswordTooShort() {
+        Login user = new Login("Kyle", "Smith", "kyl_1", "Ch@1", "+27838968976");
+        assertFalse(user.checkPasswordComplexity());
+    }
+
+    // ========== Cell Phone Tests ==========
+    @Test
     public void testCellPhoneCorrectlyFormatted() {
         Login user = new Login("Kyle", "Smith", "kyl_1", "Ch&&sec@ke99!", "+27838968976");
         assertTrue(user.checkCellPhoneNumber());
@@ -48,6 +69,13 @@ public class LoginTest {
         assertFalse(user.checkCellPhoneNumber());
     }
 
+    @Test
+    public void testCellPhoneWithoutPlus() {
+        Login user = new Login("Kyle", "Smith", "kyl_1", "Ch&&sec@ke99!", "27838968976");
+        assertFalse(user.checkCellPhoneNumber());
+    }
+
+    // ========== Register Tests ==========
     @Test
     public void testRegisterSuccess() {
         Login user = new Login("Kyle", "Smith", "kyl_1", "Ch&&sec@ke99!", "+27838968976");
@@ -84,6 +112,8 @@ public class LoginTest {
         );
     }
 }
+
+    
     
 
  
