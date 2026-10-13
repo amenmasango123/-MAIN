@@ -1,4 +1,4 @@
-/*
+/*Ss
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
@@ -16,7 +16,7 @@ public class Login {
     private String password;
     private String cellPhoneNumber;
 
-    // Constructor – matches the line in your main:
+    // Constructor – matches the line in main:
     // Login user = new Login(firstName, lastName, username, password, cellPhoneNumber);
     public Login(String firstName, String lastName, String username,
                  String password, String cellPhoneNumber) {
