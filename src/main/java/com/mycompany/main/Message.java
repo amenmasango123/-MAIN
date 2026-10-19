@@ -4,6 +4,8 @@
  */
 package com.mycompany.main;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -32,7 +34,7 @@ public class Message {
     // Generate random 10-digit ID (as String so leading zeros are kept)
     private String generateMessageID() {
         Random random = new Random();
-        long number = 1000000000L + (long)(random.nextDouble() * 9000000000L);
+        long number = 1000000000L + (long) (random.nextDouble() * 9000000000L);
         return String.valueOf(number);
     }
 
@@ -85,7 +87,7 @@ public class Message {
         if (recipient == null) {
             return "Cell phone number is incorrectly formatted or does not contain an international code. Please correct the number and try again.";
         }
-        // Must start with + and have international code + number (max 12 characters total is common)
+        // Accepts + followed by 10–12 digits (covers +27xxxxxxxxx)
         if (Pattern.matches("^\\+[0-9]{10,12}$", recipient)) {
             return "Cell phone number successfully captured.";
         }
@@ -109,7 +111,7 @@ public class Message {
         return this.messageHash;
     }
 
-    // 4. SentMessage (this is the method that handles Send / Disregard / Store)
+    // 4. SentMessage
     public String SentMessage(String choice) {
         if (choice.equals("1")) {
             sentMessages.add(this);
@@ -118,7 +120,7 @@ public class Message {
         } else if (choice.equals("2")) {
             return "Press 0 to delete the message.";
         } else if (choice.equals("3")) {
-            storeMessage(); // we will write this method next
+            storeMessage();
             return "Message successfully stored.";
         }
         return "Invalid choice.";
@@ -144,13 +146,23 @@ public class Message {
         return totalMessagesSent;
     }
 
-    // 7. storeMessage 
+    // 7. storeMessage – saves to a JSON file (pure Java)
     public void storeMessage() {
-        // Temporary – just prints for now
-        System.out.println("Message stored temporarily (JSON will be added later).");
+        try (FileWriter writer = new FileWriter("stored_messages.json", true)) {
+            // Simple JSON format
+            writer.write("{\n");
+            writer.write("  \"messageID\": \"" + messageID + "\",\n");
+            writer.write("  \"messageHash\": \"" + messageHash + "\",\n");
+            writer.write("  \"recipient\": \"" + recipient + "\",\n");
+            writer.write("  \"message\": \"" + messageText.replace("\"", "\\\"") + "\"\n");
+            writer.write("},\n");
+            System.out.println("Message successfully stored in stored_messages.json");
+        } catch (IOException e) {
+            System.out.println("Error storing message: " + e.getMessage());
+        }
     }
 
-    // Extra helper – check message length
+    // Helper – check message length
     public String checkMessageLength() {
         if (messageText == null) {
             return "Message exceeds 250 characters by 0; please reduce the size.";
@@ -164,5 +176,3 @@ public class Message {
         }
     }
 }
-    
-
