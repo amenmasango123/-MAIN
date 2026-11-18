@@ -22,9 +22,16 @@ public class Message {
     private String messageText;
     private String messageHash;
 
-    // Keep track of all sent messages
-    private static List<Message> sentMessages = new ArrayList<>();
-    private static int totalMessagesSent = 0;
+    //=======Parallel arrays - Part 3======
+private static String[] sentMessages = new String[10];
+private static String[] disregardedMessages = new String[10];
+private static String[] storedMessages = new String[10];
+private static String[] messageHashes = new String[10];
+private static String[] messageIDs = new String[10];
+
+private static int sentCount = 0;
+private static int disregardedCount = 0;
+private static int storedCount = 0;
 
     // Constructor – generates a random 10-digit Message ID
     public Message() {
