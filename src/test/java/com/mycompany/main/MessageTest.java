@@ -27,4 +27,56 @@ public class MessageTest {
         assertTrue(msg2.getSentCount() >= 2);
     }
 
-    
+    @Test
+    public void testDisplayLongestMessage() {
+        Message msg = new Message();
+        msg.setMessageText("Where are you? You are late! I have asked you to be on time.");
+        msg.setRecipient("+27838884567");
+        msg.SentMessage("3"); // store
+
+        String longest = msg.displayLongestMessage();
+        assertTrue(longest.contains("Where are you?"));
+    }
+
+    @Test
+    public void testSearchByMessageID() {
+        Message msg = new Message();
+        msg.setMessageID("0838884567");
+        msg.setMessageText("It is dinner time!");
+        msg.SentMessage("1");
+
+        String result = msg.searchByMessageID("0838884567");
+        assertTrue(result.contains("It is dinner time!"));
+    }
+
+    @Test
+    public void testSearchByRecipient() {
+        Message msg = new Message();
+        msg.setRecipient("+27838884567");
+        msg.setMessageText("Ok, I am leaving without you.");
+        msg.SentMessage("3");
+
+        String result = msg.searchByRecipient("+27838884567");
+        assertTrue(result.contains("Ok, I am leaving without you."));
+    }
+
+    @Test
+    public void testDeleteByHash() {
+        Message msg = new Message();
+        msg.setMessageText("Where are you? You are late! I have asked you to be on time.");
+        msg.createMessageHash();
+        String hash = msg.getMessageHash();
+        msg.SentMessage("1");
+
+        String result = msg.deleteByHash(hash);
+        assertTrue(result.contains("successfully deleted"));
+    }
+
+    @Test
+    public void testFullReport() {
+        Message msg = new Message();
+        String report = msg.displayFullReport();
+        assertNotNull(report);
+        assertTrue(report.contains("FULL REPORT"));
+    }
+}
